@@ -32,6 +32,10 @@ script:
     - echo "$(appstreamcli --version)"
     - echo "$(appstreamcli validate --verbose ./desktop/htmldoc.appdata.xml 2>&1)"
 
+  # Is the 'test' subdir there?
+    - ls -l test
+    - echo $(find . -type d -name test)
+
   # Configure step
     - ./configure --prefix=/usr --enable-localjpeg --enable-localzlib --enable-localpng 
 
@@ -85,10 +89,10 @@ script:
 
   # Also upload to transfer.sh
     - curl --upload-file ./htmldoc-$VERSION-x86_64.AppImage  https://transfer.sh/htmldoc-$VERSION-x86_64.AppImage 
-    
+
   # Is the 'test' subdir there?
     - ls -l test
     - echo $(find . -type d -name test)
-    
+
 after_success:
   # Do nothing for now
