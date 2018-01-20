@@ -1,0 +1,94 @@
+sudo: required # needed for trusty beta
+dist: trusty   # needed for HarfBuzz
+
+language: c
+
+compiler:
+  - clang
+  - gcc
+
+before_script:
+  - env | grep -i travis
+  - sudo add-apt-repository -y ppa:ximion/packagekit            # Need to install appstreamcli
+  - sudo apt-key update -q -y
+  - sudo apt-get update -q -y
+  # HTMLDOC requires FLTK-1.3
+  - sudo apt-get install -y appstream  libfltk1.3-dev libpng-dev zlib1g-dev libopenjpeg-dev libjpeg-dev
+
+script:
+
+  # Debug settings
+    #- set -e
+    #- set -x
+
+  # Build settings
+    - export OMP_NUM_THREADS=1
+    - export CFLAGS="-Wno-deprecated-declarations -Wdeclaration-after-statement -Wno-error=unused-variable"
+
+  # Prepare Freedesktop/AppStream stuff
+    - mkdir -p appdir/usr/share/applications/ ; cp ./desktop/htmldoc.desktop ./appdir/usr/share/applications/
+    - mkdir -p appdir/usr/share/icons/hicolor/128x128/apps/ ; cp ./desktop/htmldoc-128.png  ./appdir/usr/share/icons/hicolor/128x128/apps/htmldoc.png
+    - mkdir -p appdir/usr/share/metainfo/ ; cp ./desktop/htmldoc.appdata.xml  ./appdir/usr/share/metainfo/
+    - echo "$(appstreamcli --version)"
+    - echo "$(appstreamcli validate --verbose ./desktop/htmldoc.appdata.xml 2>&1)"
+
+  # Configure step
+    - ./configure --prefix=/usr --enable-localjpeg --enable-localzlib --enable-localpng 
+
+  # Make & install
+    - make
+    - make install DESTDIR=$(readlink -f appdir)
+
+  # Get linuxdeployqt to check prepare the AppDir
+    - wget -c "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage"
+
+  # linuxdeployqt is not executable after download
+    - chmod a+x linuxdeployqt*.AppImage
+
+  # Prepare to check + set up the AppDir ( = install-dir)
+    - unset QTDIR; unset QT_PLUGIN_PATH ; unset LD_LIBRARY_PATH
+
+  # Now let linuxdeployqt do its work (but do not use its '-appimage' param...)
+    - ./linuxdeployqt*.AppImage ./appdir/usr/share/applications/htmldoc.desktop -bundle-non-qt-libs
+
+  # Extract the linuxdeployqt AppImage, because it contains 'appimagetool',
+  # which we prefer to run under our own settings instead of the defaults
+    - ./linuxdeployqt*.AppImage --appimage-extract
+
+  # Now run 'appimagetool' with our settings:
+    - PATH=./squashfs-root/usr/bin:$PATH ./squashfs-root/usr/bin/appimagetool -v -u 'gh-releases-zsync|KurtPfeifle|htmldoc|continuous|htmldoc-*x86_64.AppImage.zsync' ./appdir/
+
+  # See if there are any libs left which point to the wrong directories:
+    - find ./appdir -executable -type f -exec ldd {} \; | grep " => /usr" | cut -d " " -f 2-3 | sort | uniq
+
+  # Set a version string
+    - export VERSION="v1.5.2-travisbuild.$TRAVIS_BUILD_NUMBER-travisbranch.$TRAVIS_BRANCH-git.$(git rev-parse --short HEAD)"
+
+  # See in Travis log what we've got:
+    - find . -name "*.AppImage*"
+    - echo $(find . -iname "*htmldoc*" 2>&1)
+
+  # Rename our AppImage to include a version string
+    - cp htmldoc*.AppImage       htmldoc-$VERSION-x86_64.AppImage
+    - cp htmldoc*.AppImage.zsync htmldoc-$VERSION-x86_64.AppImage.zsync
+    - echo "$(find . -iname "*.zsync")"
+    - echo "$(find . -iname "*.AppImage")"
+
+  # Fetch probono's upload tool:
+    - wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
+
+  # Upload our AppImage to the GitHub releases page:
+    - bash upload.sh htmldoc-$VERSION-x86_64.AppImage
+    - bash upload.sh htmldoc-$VERSION-x86_64.AppImage.zsync
+    - bash upload.sh htmldoc-x86_64.AppImage
+    - bash upload.sh htmldoc-x86_64.AppImage.zsync
+
+  # Also upload to transfer.sh
+    - curl --upload-file ./htmldoc-$VERSION-x86_64.AppImage  https://transfer.sh/htmldoc-$VERSION-x86_64.AppImage
+    
+  # Is the 'test' subdir there?
+    - ls -l test
+    - echo $(find . -type d -name test)
+    
+after_success:
+  # Do nothing for now
