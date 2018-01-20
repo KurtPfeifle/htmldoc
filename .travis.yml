@@ -33,7 +33,8 @@ script:
     - echo "$(appstreamcli validate --verbose ./desktop/htmldoc.appdata.xml 2>&1)"
 
   # Configure step
-    - ./configure --prefix=/usr --enable-localjpeg --enable-localzlib --enable-localpng 
+    - ./configure --prefix=/usr
+      #  --enable-localjpeg --enable-localzlib --enable-localpng 
 
   # Make & install
     - make
