@@ -13,7 +13,7 @@ before_script:
   - sudo apt-key update -q -y
   - sudo apt-get update -q -y
   # HTMLDOC requires FLTK-1.3
-  - sudo apt-get install -y appstream  libfltk1.3-dev
+  - sudo apt-get install -y appstream  libfltk1.3-dev libpng-dev zlib1g-dev libopenjpeg-dev libjpeg-dev
 
 script:
 
