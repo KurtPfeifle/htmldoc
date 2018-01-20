@@ -84,7 +84,7 @@ script:
     - bash upload.sh htmldoc-x86_64.AppImage.zsync
 
   # Also upload to transfer.sh
-    - curl --upload-file ./htmldoc-$VERSION-x86_64.AppImage  https://transfer.sh/htmldoc-$VERSION-x86_64.AppImage
+    - curl --upload-file ./htmldoc-$VERSION-x86_64.AppImage  https://transfer.sh/htmldoc-$VERSION-x86_64.AppImage 
     
   # Is the 'test' subdir there?
     - ls -l test
