@@ -51,6 +51,8 @@ Note: Complete documentation for HTMLDOC is available in the "doc" subdirectory.
 The following provides basic information on using HTMLDOC at the command-line
 and does not discuss the GUI or web server functionality.
 
+![](https://raw.githubusercontent.com/KurtPfeifle/htmldoc/master/desktop/screenshot-1.png)
+
 HTMLDOC accepts a list of HTML and/or Markdown "source" files and will generate
 EPUB, HTML, PostScript, or PDF output via command-line options.  A summary of
 command-line options can be shown with the "--help" option:
