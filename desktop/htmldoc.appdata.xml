@@ -26,15 +26,15 @@
   <screenshots>
     <screenshot type="default">
       <caption>HTMLDOC 'input' tab to select source file(s)</caption>
-      <image height="592" width="892">https://raw.githubusercontent.com/KurtPfeifle/htmldoc/master/screenshot-1.png</image>
-    </screenshot>
-    <screenshot>
-      <caption>HTMLDOC 'output' tab to select output file type with name+path</caption>
-      <image height="592" width="892">https://raw.githubusercontent.com/KurtPfeifle/htmldoc/master/screenshot-2.png</image>
+      <image height="592" width="892">https://raw.githubusercontent.com/KurtPfeifle/htmldoc/master/desktop/screenshot-1.png</image>
     </screenshot>
     <screenshot>
       <caption>HTMLDOC 'help' window</caption>
-      <image height="708" width="876">https://raw.githubusercontent.com/KurtPfeifle/htmldoc/master/screenshot-3.png</image>
+      <image height="708" width="876">https://raw.githubusercontent.com/KurtPfeifle/htmldoc/master/desktop/screenshot-3.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>HTMLDOC 'output' tab to select output file type with name+path</caption>
+      <image height="592" width="892">https://raw.githubusercontent.com/KurtPfeifle/htmldoc/master/desktop/screenshot-2.png</image>
     </screenshot>
   </screenshots>
   <update_contact>michael.r.sweet@gmail.com</update_contact>
