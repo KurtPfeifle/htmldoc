@@ -27,7 +27,7 @@ script:
 
   # Prepare Freedesktop/AppStream stuff
     - mkdir -p appdir/usr/share/applications/ ; cp ./desktop/htmldoc.desktop ./appdir/usr/share/applications/
-    - mkdir -p appdir/usr/share/icons/hicolor/128x128/apps/ ; cp ./desktop/htmldoc-128.png  ./appdir/usr/share/icons/hicolor/128x128/apps/htmldoc.png
+    - mkdir -p appdir/usr/share/icons/hicolor/256x256/apps/ ; cp ./desktop/htmldoc-256.png  ./appdir/usr/share/icons/hicolor/256x256/apps/htmldoc.png
     - mkdir -p appdir/usr/share/metainfo/ ; cp ./desktop/htmldoc.appdata.xml  ./appdir/usr/share/metainfo/
     - echo "$(appstreamcli --version)"
     - echo "$(appstreamcli validate --verbose ./desktop/htmldoc.appdata.xml 2>&1)"
