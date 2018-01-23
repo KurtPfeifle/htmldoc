@@ -1,3 +1,9 @@
+[![AppImage Build Status](https://travis-ci.org/KurtPfeifle/htmldoc.svg?branch=continuous)](https://travis-ci.org/KurtPfeifle/htmldoc "AppImage Build Status") <= AppImage Build Status
+
+### This Repo is cloned from original solely to build an AppImage
+
+----
+
 # Introduction
 
 HTMLDOC is a program that reads HTML and Markdown source files or web pages and
