@@ -1,6 +1,8 @@
 [![AppImage Build Status](https://travis-ci.org/KurtPfeifle/htmldoc.svg?branch=continuous)](https://travis-ci.org/KurtPfeifle/htmldoc "AppImage Build Status") <= AppImage Build Status
 
-### This Repo is cloned from original solely to build an AppImage
+### This Repo was cloned from original solely to build, test and optimize an AppImage
+
+Original README from upstream follows...
 
 ----
 
