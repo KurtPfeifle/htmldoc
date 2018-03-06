@@ -63,7 +63,7 @@ script:
     - find ./appdir -executable -type f -exec ldd {} \; | grep " => /usr" | cut -d " " -f 2-3 | sort | uniq
 
   # Set a version string
-    - _version=$(htmldoc*.AppImage --version)
+    - _version=$(./htmldoc*.AppImage --version)
     - export VERSION="v${_version}-travisbuild.$TRAVIS_BUILD_NUMBER-travisbranch.$TRAVIS_BRANCH-git.$(git rev-parse --short HEAD)"
 
   # See in Travis log what we've got:
